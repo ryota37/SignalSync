@@ -1,11 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function TrafficLight() {
   const [activeLight, setActiveLight] = useState(null);
 
+  // 状態更新をサーバーに送信
   const handleLightClick = (color) => {
-    setActiveLight((prev) => (prev === color ? null : color));
+    fetch("http://localhost:5001/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ color }),
+    });
   };
+
+  // サーバーから最新の状態を取得（Long Polling）
+  const fetchStatus = () => {
+    fetch("http://localhost:5001/status")
+      .then((res) => res.json())
+      .then((data) => {
+        setActiveLight(data.color);
+        fetchStatus(); // 繰り返しリクエストを送る
+      })
+      .catch((error) => {
+        console.error("Connection error:", error);
+        setTimeout(fetchStatus, 3000); // 接続が失敗した場合、3秒後に再接続
+      });
+  };
+
+  // コンポーネントのマウント時にfetchStatusを開始
+  useEffect(() => {
+    fetchStatus();
+  }, []);
 
   return (
     <div
