@@ -5,7 +5,7 @@ function TrafficLight() {
 
   // 状態更新をサーバーに送信
   const handleLightClick = (color) => {
-    fetch("http://localhost:5001/update", {
+    fetch("http://192.168.3.15:5001/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ color }),
@@ -14,7 +14,7 @@ function TrafficLight() {
 
   // サーバーから最新の状態を取得（Long Polling）
   const fetchStatus = () => {
-    fetch("http://localhost:5001/status")
+    fetch("http://192.168.3.15:5001/status")
       .then((res) => res.json())
       .then((data) => {
         setActiveLight(data.color);
