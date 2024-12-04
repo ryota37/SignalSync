@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+const ipaddr = "http://192.168.3.15";
+
 function TrafficLight() {
   const [activeLight, setActiveLight] = useState(null);
 
   // 状態更新をサーバーに送信
   const handleLightClick = (color) => {
-    fetch("http://192.168.3.15:5001/update", {
+    fetch(`${ipaddr}:5001/update`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ color }),
@@ -14,7 +16,7 @@ function TrafficLight() {
 
   // サーバーから最新の状態を取得（Long Polling）
   const fetchStatus = () => {
-    fetch("http://192.168.3.15:5001/status")
+    fetch(`${ipaddr}:5001/status`)
       .then((res) => res.json())
       .then((data) => {
         setActiveLight(data.color);
@@ -53,11 +55,11 @@ function TrafficLight() {
             width: "100px",
             height: "100px",
             borderRadius: "50%",
-            backgroundColor: activeLight === "red" ? "red" : "darkgray",
+            backgroundColor: activeLight === "green" ? "green" : "darkgray",
             margin: "10px",
             cursor: "pointer",
           }}
-          onClick={() => handleLightClick("red")}
+          onClick={() => handleLightClick("green")}
         />
         <div
           style={{
@@ -75,11 +77,11 @@ function TrafficLight() {
             width: "100px",
             height: "100px",
             borderRadius: "50%",
-            backgroundColor: activeLight === "green" ? "green" : "darkgray",
+            backgroundColor: activeLight === "red" ? "red" : "darkgray",
             margin: "10px",
             cursor: "pointer",
           }}
-          onClick={() => handleLightClick("green")}
+          onClick={() => handleLightClick("red")}
         />
       </div>
     </div>
