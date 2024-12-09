@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 let currentLight = null;
+let currentWorkRestState = "work";
 let clients = [];
 
 // Long Polling用エンドポイント
@@ -23,9 +24,10 @@ app.get("/status", (req, res) => {
 // 状態更新エンドポイント
 app.post("/update", (req, res) => {
   currentLight = req.body.color;
+  currentWorkRestState = req.body.workRestState;
 
   // 接続中の全クライアントに状態を送信
-  clients.forEach(client => client.json({ color: currentLight }));
+  clients.forEach(client => client.json({ color: currentLight, workRestState: currentWorkRestState }));
   clients = []; // クライアントリストをリセット
   res.sendStatus(200);
 });

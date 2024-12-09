@@ -4,13 +4,14 @@ const ipaddr = "http://192.168.3.47";
 
 function TrafficLight() {
   const [activeLight, setActiveLight] = useState(null);
+  const [workRestState, setWorkRestState] = useState("work");
 
   // 状態更新をサーバーに送信
   const handleLightClick = (color) => {
     fetch(`${ipaddr}:5001/update`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ color }),
+      body: JSON.stringify({ color, workRestState }),
     });
   };
 
@@ -20,6 +21,7 @@ function TrafficLight() {
       .then((res) => res.json())
       .then((data) => {
         setActiveLight(data.color);
+        setWorkRestState(data.workRestState);
         fetchStatus(); // 繰り返しリクエストを送る
       })
       .catch((error) => {
@@ -33,23 +35,20 @@ function TrafficLight() {
     fetchStatus();
   }, []);
 
+  // workRestStateを画像クリックで変更
+  const handleWorkRestClick = () => {
+    const newWorkRestState = workRestState === "work" ? "rest" : "work";
+    setWorkRestState(newWorkRestState);
+    fetch(`${ipaddr}:5001/update`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ color: activeLight, workRestState: newWorkRestState }),
+    });
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          backgroundColor: "gray",
-          padding: "20px",
-          borderRadius: "10px",
-        }}
-      >
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <div style={{ display: "flex", backgroundColor: "gray", padding: "20px", borderRadius: "10px" }}>
         <div
           style={{
             width: "100px",
@@ -82,6 +81,14 @@ function TrafficLight() {
             cursor: "pointer",
           }}
           onClick={() => handleLightClick("red")}
+        />
+      </div>
+      <div style={{ marginLeft: "20px" }}>
+        <img
+          src={workRestState === "work" ? "/work.png" : "/rest.png"} 
+          alt={workRestState}
+          style={{ width: "150px", height: "150px" }}
+          onClick={handleWorkRestClick}
         />
       </div>
     </div>
