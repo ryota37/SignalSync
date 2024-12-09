@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const ipaddr = "http://192.168.3.15";
+const ipaddr = "http://192.168.3.47";
 
 function TrafficLight() {
   const [activeLight, setActiveLight] = useState(null);
