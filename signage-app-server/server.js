@@ -34,5 +34,5 @@ app.post("/update", (req, res) => {
 
 // サーバー起動
 app.listen(PORT, () => {
-  console.log(`Server running on http://192.168.3.15:${PORT}`);
+  console.log(`Server running on port:${PORT}`);
 });

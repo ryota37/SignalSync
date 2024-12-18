@@ -1,12 +1,22 @@
-# Signage application
+# SignalSync
 
-## What I want to make
+## environment require
 
-- Display some information on Android tablet
-- Update the information from other devices via the local network
+- now editing ...
 
-## How to implement
+## env files
 
-- Websocket (suggested by chatGPT)
-  - Now I'm trying Websocket behavior because I've never used it
-  - Websocket test is carried out in the directory "websocket-chat"
+- signage-app/.env
+
+```
+REACT_APP_IPADDR=http://{your IP address}
+HOST={your IP address}
+```
+
+- signage-app-server/.env
+
+  - you don't need to set any values to this file.
+
+```
+
+```
