@@ -2,6 +2,58 @@ import React, { useState, useEffect } from "react";
 
 const ipaddr = process.env.REACT_APP_IPADDR;
 
+const containerStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100vh",
+  padding: "10px",
+};
+
+const trafficLightWrapperStyle = {
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  maxWidth: "1200px",
+  gap: "20px",
+};
+
+const trafficLightContainerStyle = {
+  display: "flex",
+  backgroundColor: "gray",
+  padding: "10px",
+  borderRadius: "10px",
+  justifyContent: "space-around",
+  flexGrow: 1,
+};
+
+const lightStyle = (isActive, color) => ({
+  flex: "1 1 100px",
+  maxWidth: "150px",
+  height: "150px",
+  borderRadius: "50%",
+  backgroundColor: isActive ? color : "darkgray",
+  margin: "10px",
+  cursor: "pointer",
+  transition: "background-color 0.3s",
+});
+
+const imageStyle = {
+  width: "200px",
+  height: "200px",
+  cursor: "pointer",
+};
+
+const buttonStyle = {
+  position: "absolute",
+  top: "20px",
+  right: "20px",
+  padding: "10px 20px",
+  fontSize: "16px",
+  cursor: "pointer",
+};
+
+
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen().catch((err) => {
@@ -59,60 +111,30 @@ function TrafficLight() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <div style={{ display: "flex", backgroundColor: "gray", padding: "20px", borderRadius: "10px" }}>
-        <div
-          style={{
-            width: "100px",
-            height: "100px",
-            borderRadius: "50%",
-            backgroundColor: activeLight === "green" ? "green" : "darkgray",
-            margin: "10px",
-            cursor: "pointer",
-          }}
-          onClick={() => handleLightClick("green")}
-        />
-        <div
-          style={{
-            width: "100px",
-            height: "100px",
-            borderRadius: "50%",
-            backgroundColor: activeLight === "yellow" ? "yellow" : "darkgray",
-            margin: "10px",
-            cursor: "pointer",
-          }}
-          onClick={() => handleLightClick("yellow")}
-        />
-        <div
-          style={{
-            width: "100px",
-            height: "100px",
-            borderRadius: "50%",
-            backgroundColor: activeLight === "red" ? "red" : "darkgray",
-            margin: "10px",
-            cursor: "pointer",
-          }}
-          onClick={() => handleLightClick("red")}
-        />
-      </div>
-      <div style={{ marginLeft: "20px" }}>
+    <div style={containerStyle}>
+      <div style={trafficLightWrapperStyle}>
+        <div style={trafficLightContainerStyle}>
+          <div
+            style={lightStyle(activeLight === "green", "green")}
+            onClick={() => handleLightClick("green")}
+          />
+          <div
+            style={lightStyle(activeLight === "yellow", "yellow")}
+            onClick={() => handleLightClick("yellow")}
+          />
+          <div
+            style={lightStyle(activeLight === "red", "red")}
+            onClick={() => handleLightClick("red")}
+          />
+        </div>
         <img
-          src={workRestState === "work" ? "/work.png" : "/rest.png"} 
+          src={workRestState === "work" ? "work.png" : "rest.png"}
           alt={workRestState}
-          style={{ width: "150px", height: "150px" }}
+          style={imageStyle}
           onClick={handleWorkRestClick}
         />
       </div>
-      <button
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          padding: "10px 20px",
-          cursor: "pointer",
-        }}
-        onClick={toggleFullScreen}
-      >
+      <button style={buttonStyle} onClick={toggleFullScreen}>
         Fullscreen
       </button>
     </div>
