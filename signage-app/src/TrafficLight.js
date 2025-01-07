@@ -2,6 +2,18 @@ import React, { useState, useEffect } from "react";
 
 const ipaddr = process.env.REACT_APP_IPADDR;
 
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch((err) => {
+      console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+    });
+  } else {
+    document.exitFullscreen().catch((err) => {
+      console.error(`Error attempting to exit fullscreen mode: ${err.message}`);
+    });
+  }
+}
+
 function TrafficLight() {
   const [activeLight, setActiveLight] = useState(null);
   const [workRestState, setWorkRestState] = useState("work");
@@ -91,6 +103,18 @@ function TrafficLight() {
           onClick={handleWorkRestClick}
         />
       </div>
+      <button
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          padding: "10px 20px",
+          cursor: "pointer",
+        }}
+        onClick={toggleFullScreen}
+      >
+        Fullscreen
+      </button>
     </div>
   );
 }
