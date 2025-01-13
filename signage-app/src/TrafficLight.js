@@ -13,9 +13,11 @@ const containerStyle = {
 const trafficLightWrapperStyle = {
   display: "flex",
   alignItems: "center",
+  justifyContent: "center",
   width: "100%",
   maxWidth: "1200px",
   gap: "20px",
+  flexWrap: "wrap",
 };
 
 const trafficLightContainerStyle = {
@@ -28,9 +30,8 @@ const trafficLightContainerStyle = {
 };
 
 const lightStyle = (isActive, color) => ({
-  flex: "1 1 100px",
-  maxWidth: "150px",
-  height: "150px",
+  width: "100px",
+  height: "100px",
   borderRadius: "50%",
   backgroundColor: isActive ? color : "darkgray",
   margin: "10px",
@@ -52,7 +53,6 @@ const buttonStyle = {
   fontSize: "16px",
   cursor: "pointer",
 };
-
 
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
