@@ -21,17 +21,20 @@ const trafficLightWrapperStyle = {
 };
 
 const trafficLightContainerStyle = {
+  height: "calc(20% + 50px)",
   display: "flex",
+  alignItems: "center",
   backgroundColor: "gray",
   padding: "10px",
   borderRadius: "10px",
   justifyContent: "space-around",
   flexGrow: 1,
+  aspectRatio: "3 / 1",
 };
 
 const lightStyle = (isActive, color) => ({
-  width: "100px",
-  height: "100px",
+  width: "calc(20% + 50px)",
+  aspectRatio: "1 / 1",
   borderRadius: "50%",
   backgroundColor: isActive ? color : "darkgray",
   margin: "10px",
@@ -40,8 +43,8 @@ const lightStyle = (isActive, color) => ({
 });
 
 const imageStyle = {
-  width: "200px",
-  height: "200px",
+  width: "calc(20% + 50px)",
+  aspectRatio: "1 / 1",
   cursor: "pointer",
 };
 
